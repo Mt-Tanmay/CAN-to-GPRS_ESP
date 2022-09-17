@@ -1,7 +1,9 @@
 #include <Arduino.h>
+#include "Vars.h"
+
 #include <CAN.h>
-#include <Functs.h>
-#include <mcp_can.h>
+
+#include "mcp_can.h"
 #include <SPI.h>
 
 
@@ -45,13 +47,17 @@ void setup() {
   CAN0.setMode(MCP_NORMAL);                     // Set operation mode to normal so the MCP2515 sends acks to received data.
 
   pinMode(CAN0_INT, INPUT);
-
+  
 }
 
 
+#include <Functs.h>
 
 
 void loop() {
+
+
+
 
 if (CAN_Detected || GSM_Detected ) 
   {
