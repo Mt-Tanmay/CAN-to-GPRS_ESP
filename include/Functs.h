@@ -1,3 +1,27 @@
+// Just in case someone defined the wrong thing..
+#if TINY_GSM_USE_GPRS && not defined TINY_GSM_MODEM_HAS_GPRS
+#undef TINY_GSM_USE_GPRS
+#undef TINY_GSM_USE_WIFI
+#define TINY_GSM_USE_GPRS false
+#define TINY_GSM_USE_WIFI true
+#endif
+#if TINY_GSM_USE_WIFI && not defined TINY_GSM_MODEM_HAS_WIFI
+#undef TINY_GSM_USE_GPRS
+#undef TINY_GSM_USE_WIFI
+#define TINY_GSM_USE_GPRS true
+#define TINY_GSM_USE_WIFI false
+#endif
+#ifdef DUMP_AT_COMMANDS
+#include <StreamDebugger.h>
+StreamDebugger debugger(SerialAT, SerialMon);
+TinyGsm        modem(debugger);
+#else
+TinyGsm        modem(SerialAT);
+#endif
+TinyGsmClient client(modem);
+HttpClient    http(client, server, port);
+
+
 
 
 
@@ -52,19 +76,22 @@ String read_CAN()
     }
     if (CAN.packetRtr()) 
     {
-      // Remote transmission request, packet contains no data
+      // Remote transmission request, packet contains no data                  // Copied from Example, STudy RTR in depth  @markup
       Serial.print("RTR ");
     }
     Serial.print("packet with id 0x");
     Serial.print(CAN.packetId(), HEX);                                          // Hexadecimal CAN ID, use it to Ping server with a 
-    if (CAN.packetRtr()) {
+    if (CAN.packetRtr()) 
+    {
       Serial.print(" and requested length ");
       Serial.println(CAN.packetDlc());
-    } else {
+    } else 
+    {
       Serial.print(" and length ");
       Serial.println(packetSize);
       // only print packet data for non-RTR packets
-      while (CAN.available()) {
+      while (CAN.available()) 
+      {
         Serial.print((char)CAN.read());
       }
       Serial.println();
@@ -73,13 +100,6 @@ String read_CAN()
   }
 
 }
-
-
-
-
-
-
-
 
 
 
