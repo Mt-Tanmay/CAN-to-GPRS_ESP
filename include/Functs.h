@@ -90,7 +90,7 @@ String read_CAN()
 
 
 
-void Send_GPRS()
+bool Send_GPRS()
 {
 #if TINY_GSM_USE_WIFI
   // Wifi connection parameters must be set before waiting for the network
@@ -157,18 +157,18 @@ void Send_GPRS()
 
   int length = http.contentLength();
   if (length >= 0) {
-    SerialMon.print(F("Content length is: "));
+    SerialMon.print(F("Content_length_is: "));                                              // Limit to the Default 255 CHarachers (Strictly ASCII and NMEA )
     SerialMon.println(length);
   }
   if (http.isResponseChunked()) {
-    SerialMon.println(F("The response is chunked"));
+    SerialMon.println(F("The_response_chunked"));
   }
 
   String body = http.responseBody();
   SerialMon.println(F("Response:"));
-  SerialMon.println(body);
+  SerialMon.println(body);                                                                              // Ask Harish to make a Sample HTTP Body
 
-  SerialMon.print(F("Body length is: "));
+  SerialMon.print(F("Body length is: "));                                                   // Limit to standard ESP32 Flash SPIFF PArtitions 
   SerialMon.println(body.length());
 
   // Shutdown
@@ -186,5 +186,6 @@ void Send_GPRS()
 #endif
 
   // Do nothing forevermore
-  while (true) { delay(1000); }
+  while (true) { delay(1000); }                                                             
+  return true;                                                                              // Add ESp32 DeepSleep FLag Here 
 }

@@ -103,28 +103,28 @@ void setup() {
 
 void loop() {
 
-
-
-
 if (CAN_Detected || GSM_Detected ) 
   {
     HW_Dependencies_Checkout = true;
   }
 
 
+
 if(HW_Dependencies_Checkout)
   {
-
     ping_server(); 
     // DIscover CAN devices, 
     // Read() CAN messages, get CAN_Id
     //ASK CAN for data ( store in Strings,)
     //Filter Out Valid Packets and  
+    Send_GPRS();
   }
 
 Post_String  = (read_CAN()) ;
+                                                                    // Add a ESP-Deepsleep From  Flag@GSM800 
 
-
+// Post_String will be retrieved from the GPRS Code, to be sent in a HTTP content Body, Add a Parser to Infuse NMEA and CAN Data in a 255 CHar Message
+Send_GPRS();
 
 
 }
