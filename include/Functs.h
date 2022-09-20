@@ -16,7 +16,7 @@
 StreamDebugger debugger(SerialAT, SerialMon);
 TinyGsm        modem(debugger);
 #else
-TinyGsm        modem(SerialAT);
+TinyGsm modem(SerialAT);
 #endif
 TinyGsmClient client(modem);
 HttpClient    http(client, server, port);
@@ -59,6 +59,7 @@ String read_MCP_CAN()
         
     Serial.println();
   }
+return msgString;
 }
 
 
@@ -70,9 +71,10 @@ String read_CAN()
   {
     // received a packet 
     Serial.print("Received CAN packet  ");
-    if (CAN.packetExtended()) 
-    {
-      Serial.print("CAN_Packet_extended ");
+    if ( CAN.packetExtended()  )
+    {   
+       //delay(100);
+       //Serial.print("CAN_Packet_extended");
     }
     if (CAN.packetRtr()) 
     {
@@ -98,7 +100,8 @@ String read_CAN()
     }
     Serial.println();
   }
-
+String CAN_ID = CAN.packetId();
+return 0;
 }
 
 
@@ -145,7 +148,7 @@ bool Send_GPRS()
   if (!modem.gprsConnect(apn, gprsUser, gprsPass)) {
     SerialMon.println(" fail");
     delay(10000);
-    return;
+    //return;
   }
   SerialMon.println(" success");
 

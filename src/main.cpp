@@ -1,36 +1,16 @@
 #include <Arduino.h>
 #include "Vars.h"
-#include "TinyGSM.h"
-#include <CAN.h>
-
-#include "mcp_can.h"
-#include <SPI.h>
-
-#define SerialMon Serial
-#define TINY_GSM_MODEM_SIM800
 
 
-
-#define CAN0_INT 2                              // Set INT to pin 2
-MCP_CAN CAN0(10); 
 
 
 //#endif                                                    
-#define SerialAT Serial2    
-#include <SoftwareSerial.h>                                   // HW PIn definition for Software Serial device  for used as UART2 
-SoftwareSerial SerialAT(2, 3);                                // RX, TX
-#if !defined(TINY_GSM_RX_BUFFER)
-#define TINY_GSM_RX_BUFFER 650
-#endif
-#define TINY_GSM_DEBUG SerialMon
-#define GSM_AUTOBAUD_MIN 9600
-#define GSM_AUTOBAUD_MAX 115200
-#define TINY_GSM_USE_GPRS true
-#define TINY_GSM_USE_WIFI false
 
 
 
-void setup() {
+
+void setup() 
+{
 
   Serial.begin(115200);
 
